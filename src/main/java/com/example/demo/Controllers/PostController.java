@@ -28,6 +28,9 @@ public class PostController {
     PostRepository postRepository;
 
     @Autowired
+    PostService postService;
+
+    @Autowired
     ImageRepository imageRepository;
 
     @Autowired
@@ -81,8 +84,11 @@ public class PostController {
     }
 
 
-    @RequestMapping(value="/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> DeletePost(long id){
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
+    public ResponseEntity<?> DeletePost(@PathVariable("id") long id){
+
+        Post post=postService.loadPost(id);
+        postRepository.delete(post);
 
         return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
