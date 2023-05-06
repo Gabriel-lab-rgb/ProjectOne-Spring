@@ -61,7 +61,7 @@ public class AuthController {
          fileUploadService.uploadFile(file);
     }*/
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
     public ResponseEntity<?> registerUser(@ModelAttribute SignUp signUp){
 
 
@@ -83,7 +83,7 @@ public class AuthController {
         user.setEmail(signUp.getEmail());
         user.setPassword(passwordEncoder.encode(signUp.getPassword()));
 
-        Rol roles = roleRepository.findByNombre("ROLE_ADMIN").get();
+        Rol roles = roleRepository.findByNombre("ROLE_USER").get();
         user.setRoles(Collections.singleton(roles));
 
         userRepository.save(user);

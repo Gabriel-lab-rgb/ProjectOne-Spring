@@ -6,6 +6,7 @@ import com.example.demo.Entity.Usuario;
 import com.example.demo.Form.CreateComentario;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Repository.*;
+import com.example.demo.Service.ComentarioService;
 import com.example.demo.Service.PostService;
 import com.example.demo.Service.TypeService;
 import com.example.demo.Service.UserService;
@@ -16,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @RestController
@@ -30,6 +33,8 @@ public class PostController {
     @Autowired
     PostService postService;
 
+    @Autowired
+    ComentarioService comentarioService;
     @Autowired
     ImageRepository imageRepository;
 
@@ -84,7 +89,7 @@ public class PostController {
     }
 
 
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> DeletePost(@PathVariable("id") long id){
 
         Post post=postService.loadPost(id);
@@ -92,7 +97,11 @@ public class PostController {
 
         return new ResponseEntity<>("Post deleted successfully", HttpStatus.OK);
     }
-
+    @RequestMapping(value="/comments/{id}", method = RequestMethod.GET)
+    public List<Comentario> ShowComments(@PathVariable("id") long id){
+         Post post=postService.loadPost(id);
+        return comentarioService.loadComentariosByPost(post);
+    }
 
 
 }

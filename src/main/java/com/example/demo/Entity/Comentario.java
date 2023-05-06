@@ -1,8 +1,11 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.sql.Date;
 
@@ -17,6 +20,7 @@ public class Comentario {
 
     @JsonIgnoreProperties({"comentarios","posts"})
     @ManyToOne(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name="user_id", nullable=false)
     private Usuario usuario;
 
@@ -26,7 +30,7 @@ public class Comentario {
     @Column(nullable = false)
     private String texto;
 
-
+    @JsonIgnore
     @JsonIgnoreProperties("comentarios")
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="post_id", nullable=false)

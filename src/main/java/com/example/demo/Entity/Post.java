@@ -2,7 +2,6 @@ package com.example.demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Data;
 
 import java.sql.Date;
 import java.util.Set;
@@ -105,6 +104,16 @@ public class Post {
     public Set<Images> getImages() {
         return images;
     }
+/*
+    public Images addImage(Images image)
+    {
+        if (!this.images.contains(image)) {
+            this.images = (Set<Images>) image;
+            image.setPost(this);
+        }
+
+        return this.images;
+    }*/
 
     public void setImages(Set<Images> images) {
         this.images = images;

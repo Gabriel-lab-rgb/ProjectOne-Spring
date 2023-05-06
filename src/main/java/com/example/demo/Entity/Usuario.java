@@ -32,7 +32,7 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
     private Set<Rol> roles;
 
-    @JsonIgnoreProperties({"usuario","comentarios"})
+    @JsonIgnoreProperties({"comentarios"})
     @OneToMany(mappedBy="usuario",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Post> posts;
     @JsonIgnoreProperties("usuario")

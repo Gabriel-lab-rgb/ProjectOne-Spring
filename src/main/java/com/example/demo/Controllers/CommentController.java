@@ -60,7 +60,7 @@ public class CommentController {
     }
 
 
-    @RequestMapping(value="/delete/{id}", method = RequestMethod.POST)
+    @RequestMapping(value="/delete/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteComentarioPost(@PathVariable("id") long id){
 
         Comentario comentario=comentarioService.loadComentario(id);
