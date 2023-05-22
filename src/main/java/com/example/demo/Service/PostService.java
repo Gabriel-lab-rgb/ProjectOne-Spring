@@ -24,15 +24,6 @@ public class PostService {
         return post;
     }
 
-   /* public List<Post> loadPostByUser(int id){
-
-List<Post> posts =  postRepository.findByUsuario(id)
-        .orElseThrow(() -> new ObjectNotExistsException(id));
-
-        return posts;
-    }*/
-
-
 
 }
 

@@ -1,11 +1,15 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Entity.Follow;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Form.UpdateUser;
+import com.example.demo.Form.addFollow;
 import com.example.demo.Repository.FileUploadService;
+import com.example.demo.Repository.FollowRepository;
 import com.example.demo.Repository.PostRepository;
 
 import com.example.demo.Repository.UserRepository;
+import com.example.demo.Service.FollowService;
 import com.example.demo.Service.UserService;
 import com.example.demo.Entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +32,10 @@ public class UserController {
     private UserRepository userRepository;
 
     @Autowired
-    private PostRepository postRepository;
+    private FollowRepository followRepository;
+
+    @Autowired
+    private FollowService followService;
 
 
     @RequestMapping(value="/{username}", method = RequestMethod.GET)
@@ -63,5 +70,27 @@ public class UserController {
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/users/follow/add", method = RequestMethod.POST)
+    public ResponseEntity<?> followUser(@ModelAttribute addFollow addFollow) {
+
+        Usuario follower = userService.loadUser(addFollow.getFollower());
+        Usuario followed = userService.loadUserById(addFollow.getFollowed());
+        Follow follow = new Follow();
+        follow.setFollower(follower);
+        follow.setFollowed(followed);
+        followRepository.save(follow);
+
+        return new ResponseEntity<>("Usuario seguido exitosamente", HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/users/follow/delete", method = RequestMethod.POST)
+    public ResponseEntity<?> deleteFollowUser(@PathVariable("id") long id) {
+
+
+        Follow follow = followService.loadFollow(id);
+        followRepository.delete(follow);
+
+        return new ResponseEntity<>("Seguidor eliminado exitosamente", HttpStatus.OK);
+    }
 
 }

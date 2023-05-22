@@ -1,16 +1,11 @@
 package com.example.demo.Controllers;
 
-import com.example.demo.Entity.Comentario;
-import com.example.demo.Entity.Images;
-import com.example.demo.Entity.Usuario;
+import com.example.demo.Entity.*;
+import com.example.demo.Form.AddLike;
 import com.example.demo.Form.CreateComentario;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Repository.*;
-import com.example.demo.Service.ComentarioService;
-import com.example.demo.Service.PostService;
-import com.example.demo.Service.TypeService;
-import com.example.demo.Service.UserService;
-import com.example.demo.Entity.Post;
+import com.example.demo.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +24,9 @@ public class PostController {
     private FileUploadService fileUploadService;
     @Autowired
     PostRepository postRepository;
+
+    @Autowired
+    LikePostRepository likePostRepository;
 
     @Autowired
     PostService postService;
@@ -81,6 +79,29 @@ public class PostController {
         return new ResponseEntity<>("Post registered successfully", HttpStatus.OK);
     }
 
+    @RequestMapping(value="/addLike", method = RequestMethod.POST)
+    public ResponseEntity<?> addLike(@ModelAttribute AddLike addLike){
+
+        LikePost like=new LikePost();
+        like.setPost(postService.loadPost(addLike.getPost_id()));
+        like.setUsuario(userService.loadUser(addLike.getUsername()));
+        java.util.Date d = new java.util.Date();
+        like.setFecha(new java.sql.Date(d.getTime()));
+        likePostRepository.save(like);
+
+
+        return new ResponseEntity<>("Like registered successfully", HttpStatus.OK);
+    }
+
+    @RequestMapping(value="/deleteLike/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> DeleteLike(@PathVariable("id") long id){
+
+        LikePost likePost=likePostRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotExistsException(id));
+        likePostRepository.delete(likePost);
+
+        return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
+    }
 
     @RequestMapping(value="/update", method = RequestMethod.POST,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> UpdatePost(){

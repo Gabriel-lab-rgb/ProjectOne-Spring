@@ -40,6 +40,12 @@ public class UserService implements UserDetailsService {
               .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + username));
         return usuario;
     }
+
+    public Usuario loadUserById(long id){
+        Usuario usuario=userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + id));
+        return usuario;
+    }
 }
 
 

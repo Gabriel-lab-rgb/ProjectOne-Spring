@@ -18,6 +18,5 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
 
     Optional<Comentario> findById(long id);
-   /* @Query("select * from comentario where post_id=:id")*/
     Optional <List<Comentario>> findByPost(Post post);
 }
