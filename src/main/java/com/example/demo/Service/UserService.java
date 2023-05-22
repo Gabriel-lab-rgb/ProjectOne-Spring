@@ -2,6 +2,7 @@ package com.example.demo.Service;
 
 import com.example.demo.Repository.UserRepository;
 import com.example.demo.Entity.Usuario;
+import com.example.demo.Repository.UsuarioSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,6 +42,14 @@ public class UserService implements UserDetailsService {
       Usuario usuario=userRepository.findByUsername(username)
               .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + username));
         return usuario;
+    }
+
+    public List<UsuarioSummary> loadUserByUsernameContaining(String cadena){
+
+        List<UsuarioSummary> usuarios=userRepository.findByUsernameStartingWith(cadena)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username : " + cadena));
+
+        return usuarios;
     }
 
     public Usuario loadUserById(long id){

@@ -4,11 +4,8 @@ import com.example.demo.Entity.Follow;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Form.UpdateUser;
 import com.example.demo.Form.addFollow;
-import com.example.demo.Repository.FileUploadService;
-import com.example.demo.Repository.FollowRepository;
-import com.example.demo.Repository.PostRepository;
+import com.example.demo.Repository.*;
 
-import com.example.demo.Repository.UserRepository;
 import com.example.demo.Service.FollowService;
 import com.example.demo.Service.UserService;
 import com.example.demo.Entity.Usuario;
@@ -18,6 +15,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/user")
@@ -68,6 +67,11 @@ public class UserController {
         userRepository.save(usuario);
 
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+    }
+    @RequestMapping(value="/search", method = RequestMethod.GET,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public List<UsuarioSummary> searchUsers(@RequestParam("cadena") String cadena) {
+        List<UsuarioSummary> users = userService.loadUserByUsernameContaining(cadena);
+        return users;
     }
 
     @RequestMapping(value = "/users/follow/add", method = RequestMethod.POST)
