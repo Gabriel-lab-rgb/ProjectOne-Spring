@@ -68,7 +68,7 @@ public class UserController {
 
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
-    @RequestMapping(value="/search", method = RequestMethod.GET,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping(value="/search", method = RequestMethod.GET)
     public List<UsuarioSummary> searchUsers(@RequestParam("cadena") String cadena) {
         List<UsuarioSummary> users = userService.loadUserByUsernameContaining(cadena);
         return users;

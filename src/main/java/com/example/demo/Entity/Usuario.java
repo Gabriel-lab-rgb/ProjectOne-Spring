@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -114,4 +114,13 @@ public class Usuario {
     public void setLikePosts(Set<LikePost> likePosts) {
         this.likePosts = likePosts;
     }
+
+
+    public Post getUltimoPost() {
+        if (posts != null && !posts.isEmpty()) {
+            return Collections.max(posts, Comparator.comparing(Post::getFecha));
+        }
+        return null;
+    }
+
 }
