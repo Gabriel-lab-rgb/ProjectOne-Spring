@@ -150,4 +150,6 @@ public class Post {
     public void setLikePosts(Set<LikePost> likePosts) {
         this.likePosts = likePosts;
     }
+
+
 }

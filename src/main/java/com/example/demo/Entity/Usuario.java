@@ -115,12 +115,12 @@ public class Usuario {
         this.likePosts = likePosts;
     }
 
-
+/*
     public Post getUltimoPost() {
         if (posts != null && !posts.isEmpty()) {
             return Collections.max(posts, Comparator.comparing(Post::getFecha));
         }
         return null;
-    }
+    }*/
 
 }

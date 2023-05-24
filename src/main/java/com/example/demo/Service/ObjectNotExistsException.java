@@ -9,4 +9,8 @@ public class ObjectNotExistsException extends RuntimeException{
     public ObjectNotExistsException(long objectId){
         super("Object " + objectId + " does not exist.");
     }
+
+
 }
+
+

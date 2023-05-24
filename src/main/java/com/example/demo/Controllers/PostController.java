@@ -93,11 +93,13 @@ public class PostController {
         return new ResponseEntity<>("Like registered successfully", HttpStatus.OK);
     }
 
-    @RequestMapping(value="/deleteLike/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> DeleteLike(@PathVariable("id") long id){
+    @RequestMapping(value="/deleteLike", method = RequestMethod.DELETE)
+    public ResponseEntity<?> DeleteLike(@ModelAttribute AddLike addLike){
 
-        LikePost likePost=likePostRepository.findById(id)
-                .orElseThrow(() -> new ObjectNotExistsException(id));
+        Usuario usuario= userService.loadUser(addLike.getUsername());
+        Post post=postService.loadPost(addLike.getPost_id());
+
+        LikePost likePost=likePostRepository.findByPostAndUsuario(post,usuario).orElseThrow(() -> new LikeNotExistsException(post.getId(), usuario.getId()));
         likePostRepository.delete(likePost);
 
         return new ResponseEntity<>("Post updated successfully", HttpStatus.OK);
