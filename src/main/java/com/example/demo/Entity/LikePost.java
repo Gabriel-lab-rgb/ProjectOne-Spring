@@ -1,5 +1,7 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,14 +17,15 @@ public class LikePost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false)
     private Usuario usuario;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="post_id", nullable=false)
     private Post post;
-
+    @JsonIgnore
     @Column(nullable = false)
     private Date fecha;
 

@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -46,7 +47,7 @@ public class Post {
     private Post PostShared;
     @OneToOne(mappedBy = "post")
     private Post post;*/
-    @JsonIgnoreProperties("post")
+    @JsonIgnore
     @OneToMany(mappedBy="post",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Comentario> comentarios;
     @JsonIgnoreProperties("post")

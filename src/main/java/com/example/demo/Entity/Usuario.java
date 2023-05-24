@@ -32,14 +32,14 @@ public class Usuario {
             inverseJoinColumns = @JoinColumn(name = "roles_id", referencedColumnName = "id"))
     private Set<Rol> roles;
 
-    @JsonIgnoreProperties({"comentarios"})
+    @JsonIgnoreProperties({"comentarios,usuario"})
     @OneToMany(mappedBy="usuario",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Post> posts;
-    @JsonIgnoreProperties("usuario")
+    @JsonIgnore
     @OneToMany(mappedBy="usuario",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Comentario> comentarios;
-
-    @OneToMany(mappedBy="usuario")
+    @JsonIgnore
+    @OneToMany(mappedBy="usuario",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<LikePost> likePosts;
 
 
