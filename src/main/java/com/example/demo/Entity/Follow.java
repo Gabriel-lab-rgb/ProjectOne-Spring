@@ -1,5 +1,6 @@
 package com.example.demo.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -10,9 +11,11 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnoreProperties({"image","roles","posts","seguidores","siguiendo"})
     @ManyToOne
     private Usuario follower;
 
+    @JsonIgnoreProperties({"image","roles","posts","seguidores","siguiendo"})
     @ManyToOne
     private Usuario followed;
 

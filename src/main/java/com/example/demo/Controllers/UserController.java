@@ -1,12 +1,15 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entity.Follow;
+import com.example.demo.Entity.Post;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Form.UpdateUser;
 import com.example.demo.Form.addFollow;
 import com.example.demo.Repository.*;
 
-import com.example.demo.Service.FollowService;
+
+import com.example.demo.Service.FollowNotExistsException;
+import com.example.demo.Service.LikeNotExistsException;
 import com.example.demo.Service.UserService;
 import com.example.demo.Entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +36,7 @@ public class UserController {
     @Autowired
     private FollowRepository followRepository;
 
-    @Autowired
-    private FollowService followService;
+
 
 
     @RequestMapping(value="/{username}", method = RequestMethod.GET)
@@ -74,7 +76,7 @@ public class UserController {
         return users;
     }
 
-    @RequestMapping(value = "/users/follow/add", method = RequestMethod.POST)
+    @RequestMapping(value = "/follow/add", method = RequestMethod.POST)
     public ResponseEntity<?> followUser(@ModelAttribute addFollow addFollow) {
 
         Usuario follower = userService.loadUser(addFollow.getFollower());
@@ -87,11 +89,13 @@ public class UserController {
         return new ResponseEntity<>("Usuario seguido exitosamente", HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/users/follow/delete", method = RequestMethod.POST)
-    public ResponseEntity<?> deleteFollowUser(@PathVariable("id") long id) {
+    @RequestMapping(value = "/follow/delete", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteFollowUser(@PathVariable("follower") String user_follower,
+                                              @PathVariable("followed") String user_followed) {
 
-
-        Follow follow = followService.loadFollow(id);
+        Usuario follower= userService.loadUser(user_follower);
+        Usuario followed=userService.loadUser(user_followed);
+        Follow follow = followRepository.findByFollowerAndFollowed(follower,followed).orElseThrow(() -> new FollowNotExistsException());
         followRepository.delete(follow);
 
         return new ResponseEntity<>("Seguidor eliminado exitosamente", HttpStatus.OK);

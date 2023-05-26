@@ -17,8 +17,8 @@ public class LikePost {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnore
-    @ManyToOne
+    @JsonIgnoreProperties({"image","roles","posts","seguidores","siguiendo"})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", nullable=false)
     private Usuario usuario;
     @JsonIgnore

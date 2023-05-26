@@ -42,6 +42,14 @@ public class Usuario {
     @OneToMany(mappedBy="usuario",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<LikePost> likePosts;
 
+    @JsonIgnoreProperties({"followed"})
+    @OneToMany(mappedBy="followed",cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private Set<Follow> seguidores;
+
+    @JsonIgnoreProperties({"follower"})
+    @OneToMany(mappedBy="follower",cascade = CascadeType.PERSIST, orphanRemoval = true)
+    private Set<Follow> siguiendo;
+
 
     public long getId() {
         return id;
@@ -115,7 +123,24 @@ public class Usuario {
         this.likePosts = likePosts;
     }
 
-/*
+    public Set<Follow> getSeguidores() {
+        return seguidores;
+    }
+
+    public void setSeguidores(Set<Follow> seguidores) {
+        this.seguidores = seguidores;
+    }
+
+    public Set<Follow> getSiguiendo() {
+        return siguiendo;
+    }
+
+    public void setSiguiendo(Set<Follow> siguiendo) {
+        this.siguiendo = siguiendo;
+    }
+
+
+    /*
     public Post getUltimoPost() {
         if (posts != null && !posts.isEmpty()) {
             return Collections.max(posts, Comparator.comparing(Post::getFecha));

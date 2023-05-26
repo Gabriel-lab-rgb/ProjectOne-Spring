@@ -15,7 +15,7 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnoreProperties({"comentarios","posts"})
+    @JsonIgnoreProperties({"comentarios","posts","seguidores","siguiendo","roles"})
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="user_id", nullable=false)
     private Usuario usuario;
@@ -50,7 +50,7 @@ public class Post {
     @JsonIgnore
     @OneToMany(mappedBy="post",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Comentario> comentarios;
-    @JsonIgnoreProperties("post")
+    @JsonIgnoreProperties({"post"})
     @OneToMany(mappedBy="post",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<LikePost> likePosts;
 
