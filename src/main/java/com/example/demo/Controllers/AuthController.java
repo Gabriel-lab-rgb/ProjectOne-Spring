@@ -61,8 +61,8 @@ public class AuthController {
          fileUploadService.uploadFile(file);
     }*/
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
-    public ResponseEntity<?> registerUser(@ModelAttribute SignUp signUp){
+    @RequestMapping(value="/signup", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registerUser(@ModelAttribute SignUp signUp,@RequestParam("imagen") MultipartFile imagen){
 
 
 
@@ -78,7 +78,7 @@ public class AuthController {
 
         // create user object
         Usuario user = new Usuario();
-        user.setImage(fileUploadService.uploadFile(signUp.getFile()).getOriginalFilename());
+        user.setImage(fileUploadService.uploadFile(imagen).getOriginalFilename());
         user.setUsername(signUp.getUsername());
         user.setEmail(signUp.getEmail());
         user.setPassword(passwordEncoder.encode(signUp.getPassword()));

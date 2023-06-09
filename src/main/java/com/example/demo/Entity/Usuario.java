@@ -23,7 +23,6 @@ public class Usuario {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private String image;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -49,6 +48,10 @@ public class Usuario {
     @JsonIgnoreProperties({"follower"})
     @OneToMany(mappedBy="follower",cascade = CascadeType.PERSIST, orphanRemoval = true)
     private Set<Follow> siguiendo;
+
+
+    @ManyToMany(mappedBy = "usuarios")
+    private Set<Sala> salas;
 
 
     public long getId() {

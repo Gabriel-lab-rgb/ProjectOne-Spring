@@ -2,7 +2,6 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Entity.*;
 import com.example.demo.Form.AddLike;
-import com.example.demo.Form.CreateComentario;
 import com.example.demo.Form.CreatePost;
 import com.example.demo.Repository.*;
 import com.example.demo.Service.*;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,15 +46,15 @@ public class PostController {
 
         Post post = new Post();
         post.setUsuario(userService.loadUser(createPost.getUsername()));
-        post.setType(typeService.loadTypePost(createPost.getType()));
+        post.setType(typeService.loadTypePost(createPost.getTipo()));
 
-        switch (createPost.getType()){
+        switch (createPost.getTipo()){
 
             case "Video":
-                post.setVideo(fileUploadService.uploadFile(createPost.getVideo()).getOriginalFilename());
+                post.setVideo(fileUploadService.uploadFile(createPost.getMedia()).getOriginalFilename());
                 break;
-            case "Gif":
-                post.setGif(fileUploadService.uploadFile(createPost.getGif()).getOriginalFilename());
+            case "Images":
+                /*post.setGif(fileUploadService.uploadFile(createPost.getGif()).getOriginalFilename());*/
                 break;
         }
         java.util.Date d = new java.util.Date();
@@ -65,7 +63,7 @@ public class PostController {
 
 
         postRepository.save(post);
-        if(createPost.getType().equals("Images")){
+       /* if(createPost.getType().equals("Images")){
             if(createPost.getImages().size()>0){
                 for(MultipartFile f: createPost.getImages()){
                     Images image=new Images();
@@ -74,12 +72,12 @@ public class PostController {
                     imageRepository.save(image);
                 }
             }
-        }
+        }*/
 
         return new ResponseEntity<>("Post registered successfully", HttpStatus.OK);
     }
 
-    @RequestMapping(value="/addLike", method = RequestMethod.POST)
+    @RequestMapping(value="/addLike", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> addLike(@ModelAttribute AddLike addLike){
 
         LikePost like=new LikePost();

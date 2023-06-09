@@ -1,6 +1,5 @@
 package com.example.demo.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,26 +7,28 @@ import lombok.Data;
 import java.sql.Date;
 
 @Entity
-
-@Table(name = "likepost")
-public class LikePost {
-
+@Table(name = "Mensaje")
+public class Mensaje {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @JsonIgnoreProperties({"image","roles","posts","seguidores","siguiendo"})
+    @JsonIgnoreProperties({"comentarios","posts","seguidores","siguiendo","roles","email"})
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=false)
+    @JoinColumn(name = "user_id",nullable = false)
     private Usuario usuario;
-    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name="post_id", nullable=false)
-    private Post post;
-    @JsonIgnore
+    @JoinColumn(name = "sala_id",nullable = false)
+    private Sala sala;
+
+    @Column(nullable = false)
+    private String mensaje;
+
     @Column(nullable = false)
     private Date fecha;
+
+    private MessageStatus status;
 
 
     public long getId() {
@@ -46,12 +47,20 @@ public class LikePost {
         this.usuario = usuario;
     }
 
-    public Post getPost() {
-        return post;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setSala(Sala sala) {
+        this.sala = sala;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public Date getFecha() {
@@ -61,4 +70,12 @@ public class LikePost {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
+
+
+    public enum MessageStatus {
+        RECIBIDO, ENTREGADO
+    }
+
+
+
 }

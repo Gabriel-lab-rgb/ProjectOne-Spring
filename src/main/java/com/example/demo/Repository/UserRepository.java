@@ -1,5 +1,6 @@
 package com.example.demo.Repository;
 
+import com.example.demo.Entity.Sala;
 import com.example.demo.Entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,6 +19,7 @@ public interface UserRepository extends JpaRepository<Usuario, Long> {
     Optional<List<UsuarioSummary>> findByUsernameStartingWith(@Param("username") String username);
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
+
 
 }
 

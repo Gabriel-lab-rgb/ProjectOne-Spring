@@ -18,5 +18,5 @@ public interface ComentarioRepository extends JpaRepository<Comentario, Long> {
 
 
     Optional<Comentario> findById(long id);
-    Optional <List<Comentario>> findByPost(Post post);
+    Optional <List<Comentario>> findByPostOrderByFecha(Post post);
 }

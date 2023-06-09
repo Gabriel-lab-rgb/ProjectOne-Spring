@@ -6,5 +6,5 @@ import lombok.Data;
 public class CreateComentario {
     private long post_id;
     private String username;
-    private String texto;
+    private String comentario;
 }

@@ -36,7 +36,7 @@ public class CommentController {
         Comentario comentario=new Comentario();
         comentario.setUsuario(usuario);
         comentario.setPost(post);
-        comentario.setTexto(createComentario.getTexto());
+        comentario.setTexto(createComentario.getComentario());
         java.util.Date d = new java.util.Date();
         comentario.setFecha(new java.sql.Date(d.getTime()));
 
@@ -44,7 +44,7 @@ public class CommentController {
 
 
 
-        return new ResponseEntity<>("Comentario created successfully", HttpStatus.OK);
+        return new ResponseEntity<>(comentario, HttpStatus.CREATED);
     }
 
 

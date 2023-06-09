@@ -26,7 +26,7 @@ public class ComentarioService {
     }
 
     public List<Comentario> loadComentariosByPost(Post post){
-        List<Comentario> comentarioList=comentarioRepository.findByPost(post)
+        List<Comentario> comentarioList=comentarioRepository.findByPostOrderByFecha(post)
                 .orElseThrow(() -> new ObjectNotExistsException(post.getId()));
         return comentarioList;
     }

@@ -9,10 +9,7 @@ import java.util.ArrayList;
 @Data
 public class CreatePost {
     private String username;
-    private String comunidad;
-    private String type;
+    private String tipo;
     private String texto;
-    private ArrayList<MultipartFile> images;
-    private MultipartFile gif;
-    private MultipartFile video;
+    private MultipartFile media;
 }

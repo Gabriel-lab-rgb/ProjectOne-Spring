@@ -1,15 +1,12 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Entity.Follow;
-import com.example.demo.Entity.Post;
-import com.example.demo.Form.CreatePost;
 import com.example.demo.Form.UpdateUser;
 import com.example.demo.Form.addFollow;
 import com.example.demo.Repository.*;
 
 
 import com.example.demo.Service.FollowNotExistsException;
-import com.example.demo.Service.LikeNotExistsException;
 import com.example.demo.Service.UserService;
 import com.example.demo.Entity.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
